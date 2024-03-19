@@ -1,5 +1,6 @@
 #import dei moduli esterni
 #http.client --> per effettuare connessioni http e ricevere i dati di risposta (header, body etc.)
+#ipaddress --> introdotta per la validazione dell'ip
 import http.client, ipaddress
 
 #funzione per la validazione dell'indirizzo ip inserito
@@ -8,12 +9,12 @@ def is_valid_ip(ip_address):
     try:
         #ip_address riceve in input la stringa dell'ip e se non è valido genera una eccezione
         ipaddress.ip_address(ip_address)
-        return True;
+        return True
     #se entra in exception restituisce false
     except ValueError:
         #chiedo all'utenet di inserire un IP valido
         print("Inserisci una stringa con indirizzo IP valido (e.g. 192.168.1.6) \n")
-        return False;
+        return False
 
 #funzione per la restituzione dello status code del metodo http indicato
 def get_status_http_method(ip, port, path, http_method):
