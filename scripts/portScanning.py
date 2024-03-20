@@ -1,7 +1,11 @@
+### IMPORT MODULI ESTERNI
+
 #import dei moduli esterni
 #socket --> introdotta per la gestione della connessione socket
 #ipaddress --> introdotta per la validazione dell'ip
 import socket, ipaddress
+
+### DEFINIZIONE FUNZIONI
 
 #funzione per la validazione dell'indirizzo ip inserito
 def is_valid_ip(ip_address):
@@ -17,11 +21,11 @@ def is_valid_ip(ip_address):
         return False
     
 #funzione per la scansione multiporta su un target specifico
-def scanning_port(ip, min_port, max_port, protocol):
+def scanning_port(ip, min_port, max_port, protocol_in, format):
     #verifica del protocollo richiesto per la creazione dell'istanza socket 
-    if(protocol == "TCP" or protocol == "tcp"):
+    if(protocol_in == "TCP" or protocol_in == "tcp"):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    elif(protocol == "UDP" or protocol == "udp"):
+    elif(protocol_in == "UDP" or protocol_in == "udp"):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     else:
         print ("Il protocollo richiesto non è valido!\n")
@@ -31,13 +35,23 @@ def scanning_port(ip, min_port, max_port, protocol):
         status = s.connect_ex((ip_target, port))
         #se la connessione è OK stampa OPEN altrimenti CLOSED
         #connect_ex ritorna 0 in caso di successo
+        #gli if sulla variabile format servono a verificare il formato di output scelto dall'utente
         if (status == 0):
-             print ('Porta ', port, ' ', protocol, ' OPEN')
+             if(format == 1 or format == 3):
+                print ('Porta ', port, ' ', protocol_in, ' OPEN')
         else:
-            print ('Porta ', port, ' ', protocol, ' CLOSED')
+            if(format == 2 or format == 3):
+                print ('Porta ', port, ' ', protocol_in, ' CLOSED')
     #chiusura della connessione
     s.close()
 
+### DICHIARAZIONE VARIABILI E CHECK INPUT UTENTE
+
+#dichiarazione variabili per input utente
+ip_target = ""
+low_port = -1
+high_port = -1
+choise_out = 0
 
 #Input IP target con validazione
 while True:
@@ -47,21 +61,21 @@ while True:
     if (is_valid_ip(ip_target)):
         break
 
-print ("Inserisci il range di porte da scansionare (0-65535) \n")
-
-#Input porte con validazione
+#Input Porta min con validazione
 while True:
     #medesimo principio dell'input relativo all'ip target
     try:
-        low_port = int(input("Inserisci la porta minima (range: 0-65535) del target:\n"))
+        low_port = int(input("Inserisci la porta minima (range: 0-65534):\n"))
     except ValueError:
-        print("Inserisci una porta valida nel range 0-65535 \n")
-    #esce dall'iterazione solo se viene inserito un intero che rientri nel range 
-    if(0 <= low_port <= 65535):
-        break
+        print("Inserisci una porta valida! \n")
+    #esce dall'iterazione solo se viene inserito un intero che rientri nel range UDP
+    if(low_port != -1):
+        if(0 <= low_port <= 65535):
+            break
 
+#Input Porta max con validazione
 while True:
-    #medesimo principio dell'input relativo all'ip target
+    #medesimo principio dell'input relativo agli altri check input
     try:
         high_port = int(input("Inserisci la porta massima (range: 0-65535) maggiore della precedente:\n"))
     except ValueError:
@@ -70,12 +84,23 @@ while True:
     if(low_port < high_port <= 65535):
         break
 
+#Input scelta output
+while True:
+    #medesimo principio dell'input relativo agli altri check input
+    try:
+        choise_out = int(input("Scegli il formato output:\n1- Porte OPEN\n2- Porte CLOSED\n3- Tutte le porte\n"))
+    except ValueError:
+        print("Inserisci un valore numerico tra 1 e 3!\n")
+    #esce dall'iterazione solo se viene inserito un intero che rientri nel range 
+    if(choise_out == 1 or choise_out == 2 or choise_out == 3):
+        break
+
+
+### CORPO PRINCIPALE DEL CODICE
+
 print ('Scanning host ', ip_target, ' from port ', low_port, ' to port ', high_port, '\n ')
 
 #chiamata funzione per la scansione sia per porte TCP che per porte UDP
-scanning_port(ip_target, low_port, high_port, "TCP")
-scanning_port(ip_target, low_port, high_port, "UDP")
+scanning_port(ip_target, low_port, high_port, "TCP", choise_out)
+scanning_port(ip_target, low_port, high_port, "UDP", choise_out)
 
-#EVENTUALE MODIFICA:
-#chiedere all'utente il formato output
-#1 - solo porte OPEN, 2 - solo porte CLOSED, 3 - entrambe  

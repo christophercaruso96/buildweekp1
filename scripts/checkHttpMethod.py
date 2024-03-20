@@ -1,7 +1,11 @@
+### IMPORT MODULI ESTERNI
+
 #import dei moduli esterni
 #http.client --> per effettuare connessioni http e ricevere i dati di risposta (header, body etc.)
 #ipaddress --> introdotta per la validazione dell'ip
 import http.client, ipaddress
+
+### DEFINIZIONE FUNZIONI
 
 #funzione per la validazione dell'indirizzo ip inserito
 def is_valid_ip(ip_address):
@@ -49,7 +53,8 @@ def get_status_http_method(ip, port, path, http_method):
         #restituisco un valore corrispondente ad un error code status
         return 500
 
-    
+
+### DICHIARAZIONE VARIABILI E CHECK INPUT UTENTE    
 
 #dichiarazione variabili per input utente
 ip_target = ""
@@ -86,7 +91,10 @@ while True:
     if(path_target != ""):
         break
 
-#per get, post ed head valgono gli stessi status code)
+
+### CORPO PRINCIPALE DEL CODICE
+
+#per get, post ed head valgono gli stessi status code
 #chiamo la funzione get_status_http_method (o con GET o con POST o con HEAD) e salvo lo status code
 status_code_get_post = get_status_http_method(ip_target, port_target, path_target, "GET")
 #inizializzo la variabile booleana per il check della validità della risorsa a True
@@ -127,11 +135,11 @@ if(res_is_valid == True):
         trace = get_status_http_method(ip_target, port_target, path_target, "TRACE")
         #se per ogni method lo status code risultante è quello atteso, sono abilitati e li aggiungo in coda alla stringa
         if(put == 200 or put == 201 or put == 204):
-            method_allowed = method_allowed + " PUT"
+            method_allowed = method_allowed + ", PUT"
         if(delete == 200 or delete == 202 or delete == 204):
-            method_allowed = method_allowed + " DELETE"
+            method_allowed = method_allowed + ", DELETE"
         if(trace == 200 ):
-            method_allowed = method_allowed + " TRACE"
+            method_allowed = method_allowed + ", TRACE"
         #stampo la stringa con i metodi abilitati costruita tramite controlli
         print("Metodi abilitati: ", method_allowed, "\n")
 #se è stata inserita una risorsa non valida (non esiste o non è raggiungibile) stampo un messaggio di errore
