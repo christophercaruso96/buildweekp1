@@ -22,7 +22,7 @@ def is_valid_ip(ip_address):
     
 #funzione per la scansione multiporta su un target specifico
 def scanning_port(ip, min_port, max_port, protocol_in, format):
-    for port in range(low_port, high_port + 1):
+    for port in range(min_port, max_port + 1):
         #verifica del protocollo richiesto per la creazione dell'istanza socket 
         if(protocol_in == "TCP" or protocol_in == "tcp"):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,7 +33,7 @@ def scanning_port(ip, min_port, max_port, protocol_in, format):
             return 0
         #iterazione dalla porta minima alla porta massima richiesta
         #esegue la connessione porta per porta
-        status = s.connect_ex((ip_target, port))
+        status = s.connect_ex((ip, port))
         #se la connessione è OK stampa OPEN altrimenti CLOSED
         #connect_ex ritorna 0 in caso di successo
         #gli if sulla variabile format servono a verificare il formato di output scelto dall'utente
