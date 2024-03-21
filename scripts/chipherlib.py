@@ -172,6 +172,9 @@ def brute_force(user_list, pwd_list, ip, context, possible_err_msg, security_lev
                     msg_failed_brute = '<pre><br>Username and/or password incorrect.</pre>'
                     #chiamata ricorsiva della funzione in cui viene passato il nuovo path/context per la login e il cookie_session per distinguere dal passo induttivo
                     brute_force(user_list, pwd_list, ip, "/dvwa/vulnerabilities/brute/", msg_failed_brute, security_lev, cookie_session)
+                    #dopo la chiamata ricorsiva mettiamo un return 0 poichè finito lo stack della ricorsione tornerebbe ad iterare nuovamente sulle credenziali
+                    #ma per la prima login sono già state trovate quelle corrette 
+                    return 0
                  else:
                     #se la check_login_post non ha restituito le credenziali inserite non erano quelle valide
                     print("Credenziali non valide!")
@@ -187,6 +190,3 @@ def brute_force(user_list, pwd_list, ip, context, possible_err_msg, security_lev
                  if(new_check_credentials == 1):
                       #se la login ha avuto successo interrompe con una return ed entrambi i context sono stati colpiti dal bruteforce con successo
                       return 0
-                 #nel caso in cui si voglia lavorare sul livello high è stato introdotto uno sleep superiore rispetto a quello presente nel form di DVWA livello high
-                 if(security_lev == "high"):
-                      time.sleep(4)
