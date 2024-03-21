@@ -71,7 +71,7 @@ while True:
         print("Inserisci una porta valida! \n")
     #esce dall'iterazione solo se viene inserito un intero che rientri nel range UDP
     if(low_port != -1):
-        if(0 <= low_port <= 65535):
+        if(0 <= low_port <= 65534):
             break
 
 #Input Porta max con validazione
