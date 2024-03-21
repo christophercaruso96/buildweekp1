@@ -1,57 +1,9 @@
 ### IMPORT MODULI ESTERNI
 
 #import dei moduli esterni
-#http.client --> per effettuare connessioni http e ricevere i dati di risposta (header, body etc.)
-#ipaddress --> introdotta per la validazione dell'ip
-import http.client, ipaddress
 
-### DEFINIZIONE FUNZIONI
-
-#funzione per la validazione dell'indirizzo ip inserito
-def is_valid_ip(ip_address):
-    #se l'ip è valido ritorna True
-    try:
-        #ip_address riceve in input la stringa dell'ip e se non è valido genera una eccezione
-        ipaddress.ip_address(ip_address)
-        return True
-    #se entra in exception restituisce false
-    except ValueError:
-        #chiedo all'utenet di inserire un IP valido
-        print("Inserisci una stringa con indirizzo IP valido (e.g. 192.168.1.6) \n")
-        return False
-
-#funzione per la restituzione dello status code del metodo http indicato
-def get_status_http_method(ip, port, path, http_method):
-    #N.B. --> 405 Method Not Allowed
-    #inizializzo la variabile response per check successivo
-    response = None
-    #try-except per gestire l'eccezzione nella connessione
-    try:
-        #la funzione http.client.HTTPConnection prende in input i parametri host, porta.
-        #la funzione restituisce l’oggetto connection. 
-        connection = http.client.HTTPConnection(ip, port)
-        #invio richiesta indicando metodo e path per RequestURI
-        connection.request(http_method, path)
-        #salvataggio risposta server
-        response = connection.getresponse()
-        #print ("I metodi abilitati sono: ", response.getheader('Allow'))
-        #chiusura connessione
-        connection.close()
-        #return con valori contenuti nel tag Allow
-    #gestione eccezione Connessione e stampa errore
-    except ConnectionRefusedError:
-        print ("Connessione fallita!")
-    #Se response è None non è stato possibile connettersi e ritorno uno status code di errore
-    if(response):
-        #nel caso del method OPTIONS va restituito un tag dell'header e non lo status
-        if(http_method == "OPTIONS"):
-            return response.getheader('Allow')
-            #se il metodo non è OPTIONS dovrò sempre restituire lo status
-        else:
-            return response.status
-    else:
-        #restituisco un valore corrispondente ad un error code status
-        return 500
+#import della funzione brute_force e is_valid_ip definita nel modulo chipherlib
+from chipherlib import is_valid_ip, get_status_http_method
 
 
 ### DICHIARAZIONE VARIABILI E CHECK INPUT UTENTE    
