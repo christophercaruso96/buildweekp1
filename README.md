@@ -5,9 +5,5 @@
 5) Lo script checkHttpMethod.py esegue l'enumerazione dei Metodi Http abilitati su un path specifico che costituisce la RequestUri (se OPTIONS è disabilitato fa comunque ulteriori verifiche sugli altri: GET, PUT, POST ...)
 6) Lo script portScanning.py esegue un check delle porte UDP/TCP a seconda del range e dell'output richiesto
 7) Lo script bruteForce.py esegue un bruteForce con funzione ricorsiva per colpire su più livelli (settati PHPSESSID e security)
+8) Nell'area deriverables_cliente sono presenti i documenti da inviare al cliente (Documento Management con calcolo Effort in FTE, Relazione Tecnica, Proposta Commerciale)
 
-TO-DO:
-- Aggiungere un WAF nel network diagram
-- Preventivo tecnologie del network diagram da completare
-- Esecuzione degli script per mettere l'output nella relazione
-- Produrre documentazione, proposta progetto e analisi per il cliente
