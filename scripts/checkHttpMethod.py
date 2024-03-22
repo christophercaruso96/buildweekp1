@@ -3,7 +3,7 @@
 #import dei moduli esterni
 
 #import della funzione brute_force e is_valid_ip definita nel modulo chipherlib
-from chipherlib import is_valid_ip, get_status_http_method
+from cipherlib import is_valid_ip, get_status_http_method
 
 
 ### DICHIARAZIONE VARIABILI E CHECK INPUT UTENTE    

@@ -1,7 +1,7 @@
 ### IMPORT MODULI ESTERNI
 
 #import della funzione brute_force e is_valid_ip definita nel modulo chipherlib
-from chipherlib import is_valid_ip, scanning_port
+from cipherlib import is_valid_ip, scanning_port
 
 ### DICHIARAZIONE VARIABILI E CHECK INPUT UTENTE
 

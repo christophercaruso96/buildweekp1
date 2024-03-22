@@ -1,7 +1,7 @@
 ### IMPORT MODULI ESTERNI
 
 #import della funzione brute_force e is_valid_ip definita nel modulo chipherlib
-from chipherlib import brute_force, is_valid_ip
+from cipherlib import brute_force, is_valid_ip
 
 #import os --> modulo esterno usato per validare il path che verrà inserito per i file contenenti password e username
 import os
